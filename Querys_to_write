@@ -183,6 +183,24 @@ SELECT EMPLOYEEID,NAME,POSITION,CONCAT('$',SALARY) AS salary,REMARKS FROM EMPLOY
 |          8 | Scruffy Scruffington     | Janitor      | $5000.00 | NULL                                               |
 
 Q8) Write query to Add remarks of those employee which are never remarked before.
+ update employee set remarks='abs' where remarks is null;
+Query OK, 7 rows affected (0.08 sec)
+Rows matched: 7  Changed: 7  Warnings: 0
+
+MariaDB [exam713483]> select *from employee;
++------------+--------------------------+--------------+---------+----------------------------------------------------+
+| EmployeeID | Name                     | Position     | Salary  | Remarks                                            |
++------------+--------------------------+--------------+---------+----------------------------------------------------+
+|          1 | Phillip J. Fry           | Delivery boy | 7500.00 | Not to be confused with the Philip J. Fry from Hov |
+|          2 | Turanga Leela            | Captain      | 9999.99 | abs                                                |
+|          3 | Bender Bending Rodriguez | Robot        | 7500.00 | abs                                                |
+|          4 | Hubert J. Farnsworth     | CEO          | 9999.99 | abs                                                |
+|          5 | John A. Zoidberg         | Physician    |   25.00 | abs                                                |
+|          6 | Amy Wong                 | Intern       | 5000.00 | abs                                                |
+|          7 | Hermes Conrad            | Bureaucrat   | 9999.99 | abs                                                |
+|          8 | Scruffy Scruffington     | Janitor      | 5000.00 | abs                                                |
++------------+--------------------------+--------------+---------+----------------------------------------------------+
+8 rows in set (0.00 sec)
 Q9) Display employee details in following format "Phillip J. Fry is Delivery boy and earns $7,500.00/month"
  SELECT CONCAT(NAME ,' is ',POSITION,'and earns ','$',SALARY,'/MONTH')   FROM EMPLOYEE LIMIT 1;
 +----------------------------------------------------------------+
