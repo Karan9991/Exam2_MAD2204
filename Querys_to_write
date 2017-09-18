@@ -110,6 +110,9 @@ INSERT INTO Package VALUES(5, 1, 'Undeclared', 100.0, 5, 1);
 Create all select queries as VIEW Object and name it as v1...vn
 
 Q1) Display employess who name is "Turanga Leela" along with its shipment dertails.
+
+
+
 Q2) List those packages which are intented for client whose ids are 1,5 or 6
 Q3) Display name of emnployee and plant which are cleared
 Q4) Display details of shipment data (Month, Day YYYY), sender and receiver name whose package weight is between 5 and 10
