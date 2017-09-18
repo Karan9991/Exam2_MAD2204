@@ -110,15 +110,100 @@ INSERT INTO Package VALUES(5, 1, 'Undeclared', 100.0, 5, 1);
 Create all select queries as VIEW Object and name it as v1...vn
 
 Q1) Display employess who name is "Turanga Leela" along with its shipment dertails.
-
+select e.name,s.shipmentid,s.shipmentdate,s.manager,s.planet from employee e join shipment s on e.employeeid=s.shipmentid where employeeid=2;
++---------------+------------+--------------+---------+--------+
+| name          | shipmentid | shipmentdate | manager | planet |
++---------------+------------+--------------+---------+--------+
+| Turanga Leela |          2 | 3004-05-11   |       1 |      2 |
++---------------+------------+--------------+---------+--------+
 
 
 Q2) List those packages which are intented for client whose ids are 1,5 or 6
+
+select p.shipment,p.packagenumber,p.contents,p.weight,p.sender,p.recipient from package p join client c on p.packagenumber=c.accountnumber where accountnumber=1 or 5 or 6;
++----------+---------------+-------------------+--------+--------+-----------+
+| shipment | packagenumber | contents          | weight | sender | recipient |
++----------+---------------+-------------------+--------+--------+-----------+
+|        1 |             1 | Undeclared        |   1.50 |      1 |         2 |
+|        2 |             1 | Undeclared        |  10.00 |      2 |         3 |
+|        2 |             2 | A bucket of krill |   2.00 |      8 |         7 |
+|        3 |             1 | Undeclared        |  15.00 |      3 |         4 |
+|        3 |             2 | Undeclared        |   3.00 |      5 |         1 |
+|        3 |             3 | Undeclared        |   7.00 |      2 |         3 |
+|        4 |             1 | Undeclared        |   5.00 |      4 |         5 |
+|        4 |             2 | Undeclared        |  27.00 |      1 |         2 |
+|        5 |             1 | Undeclared        | 100.00 |      5 |         1 |
++----------+---------------+-------------------+--------+--------+-----------+
+
 Q3) Display name of emnployee and plant which are cleared
 Q4) Display details of shipment data (Month, Day YYYY), sender and receiver name whose package weight is between 5 and 10
+select s.shipmentdate,p.sender,p.recipient from shipment s join package p on s.shipmentid=p.packagenumber where weight between 5 and 10;
++--------------+--------+-----------+
+| shipmentdate | sender | recipient |
++--------------+--------+-----------+
+| 3004-05-11   |      2 |         3 |
+| 3004-05-11   |      4 |         5 |
+| NULL         |      2 |         3 |
++--------------+--------+-----------+
+3 rows in set (0.05 sec)
 Q5) Give details of those shipments which are currently processed at plant name "Mars" or "Amazonia"
+select s.shipmentid,s.shipmentdate,s.manager,s.planet from shipment s join planet p on s.shipmentid=p.planetid where p.name like '%mars%' or '%amazonia%';
++------------+--------------+---------+--------+
+| shipmentid | shipmentdate | manager | planet |
++------------+--------------+---------+--------+
+|          3 | NULL         |       2 |      3 |
++------------+--------------+---------+--------+
+1 row in set, 4 warnings (0.03 sec)
 Q6) List client names whose pakages are "Undeclared"
+select c.name from client c join package p on c.accountnumber=p.packagenumber where contents like '%undeclared%';
++----------------+
+| name           |
++----------------+
+| Zapp Brannigan |
+| Zapp Brannigan |
+| Zapp Brannigan |
+| Al Gore's Head |
+| Barbados Slim  |
+| Zapp Brannigan |
+| Al Gore's Head |
+| Zapp Brannigan |
++----------------+
 Q7) Display those employees details containing salary format as $2,700.00
+SELECT EMPLOYEEID,NAME,POSITION,CONCAT('$',SALARY) AS salary,REMARKS FROM EMPLOYEE;
++------------+--------------------------+--------------+----------+----------------------------------------------------+
+| EMPLOYEEID | NAME                     | POSITION     | salary   | REMARKS                                            |
++------------+--------------------------+--------------+----------+----------------------------------------------------+
+|          1 | Phillip J. Fry           | Delivery boy | $7500.00 | Not to be confused with the Philip J. Fry from Hov |
+|          2 | Turanga Leela            | Captain      | $9999.99 | NULL                                               |
+|          3 | Bender Bending Rodriguez | Robot        | $7500.00 | NULL                                               |
+|          4 | Hubert J. Farnsworth     | CEO          | $9999.99 | NULL                                               |
+|          5 | John A. Zoidberg         | Physician    | $25.00   | NULL                                               |
+|          6 | Amy Wong                 | Intern       | $5000.00 | NULL                                               |
+|          7 | Hermes Conrad            | Bureaucrat   | $9999.99 | NULL                                               |
+|          8 | Scruffy Scruffington     | Janitor      | $5000.00 | NULL                                               |
+
 Q8) Write query to Add remarks of those employee which are never remarked before.
 Q9) Display employee details in following format "Phillip J. Fry is Delivery boy and earns $7,500.00/month"
+ SELECT CONCAT(NAME ,' is ',POSITION,'and earns ','$',SALARY,'/MONTH')   FROM EMPLOYEE LIMIT 1;
++----------------------------------------------------------------+
+| CONCAT(NAME ,' is ',POSITION,'and earns ','$',SALARY,'/MONTH') |
++----------------------------------------------------------------+
+| Phillip J. Fry is Delivery boyand earns $7500.00/MONTH         |
++----------------------------------------------------------------+
+1 row in set (0.00 sec)
 Q10) Update shipment date to current date for all data having NULL value
+UPDATE SHIPMENT SET SHIPMENTDATE=CURDATE() WHERE SHIPMENTDATE IS NULL;
+Query OK, 3 rows affected (0.08 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+ SELECT *FROM SHIPMENT;
++------------+--------------+---------+--------+
+| ShipmentID | ShipmentDate | Manager | Planet |
++------------+--------------+---------+--------+
+|          1 | 3004-05-11   |       1 |      1 |
+|          2 | 3004-05-11   |       1 |      2 |
+|          3 | 2017-09-18   |       2 |      3 |
+|          4 | 2017-09-18   |       2 |      4 |
+|          5 | 2017-09-18   |       7 |      5 |
++------------+--------------+---------+--------+
++------------+--------------------------+--------------+----------+------------
