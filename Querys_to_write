@@ -137,14 +137,16 @@ select p.shipment,p.packagenumber,p.contents,p.weight,p.sender,p.recipient from 
 
 Q3) Display name of emnployee and plant which are cleared
 Q4) Display details of shipment data (Month, Day YYYY), sender and receiver name whose package weight is between 5 and 10
-select s.shipmentdate,p.sender,p.recipient from shipment s join package p on s.shipmentid=p.packagenumber where weight between 5 and 10;
-+--------------+--------+-----------+
-| shipmentdate | sender | recipient |
-+--------------+--------+-----------+
-| 3004-05-11   |      2 |         3 |
-| 3004-05-11   |      4 |         5 |
-| NULL         |      2 |         3 |
-+--------------+--------+-----------+
+ select s.shipmentdate,c.name from shipment s join package p on s.shipmentid=p.packagenumber join client c on c.accountnumber=p.packagenumber where weight between 5 and 10;
++--------------+----------------+
+| shipmentdate | name           |
++--------------+----------------+
+| 3004-05-11   | Zapp Brannigan |
+| 2017-09-18   | Barbados Slim  |
+| 3004-05-11   | Zapp Brannigan |
++--------------+----------------+
+3 rows in set (0.00 sec)
+
 3 rows in set (0.05 sec)
 Q5) Give details of those shipments which are currently processed at plant name "Mars" or "Amazonia"
 select s.shipmentid,s.shipmentdate,s.manager,s.planet from shipment s join planet p on s.shipmentid=p.planetid where p.name like '%mars%' or '%amazonia%';
